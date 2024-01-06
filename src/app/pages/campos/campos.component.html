@@ -4,7 +4,7 @@
       <h1 class="titulo">{{titulo}}</h1>
     </div>
     <div class="col-10 offset-1">
-      <!-- <img [src]="getSvgUrl(mapa)" alt="Mapa SVG"> -->
+      <img [src]="getSvgUrl(mapa)" alt="Mapa SVG">
     </div>
   </div>
   <div class="container">
@@ -13,8 +13,7 @@
       <div class="col">
         <mat-form-field>
           <mat-label>Seleciona la fecha</mat-label>
-          <input matInput [matDatepicker]="picker1" [formControl]="date">
-          <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+          <input matInput [matDatepicker]="picker1" [formControl]="date" (dateChange)="cambioFecha($event)">
           <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -25,29 +24,33 @@
     </div>
 
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
-      <ng-container matColumnDef="horario">
-        <mat-header-cell *matHeaderCellDef> HORARIOS </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.horario }} </mat-cell>
+      <ng-container  matColumnDef="horario">
+        <mat-header-cell class="horarios" *matHeaderCellDef> HORARIOS </mat-header-cell>
+        <mat-cell class="horarios" *matCellDef="let element"> {{ element.horario }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="campo1">
-        <mat-header-cell *matHeaderCellDef> Campo 01 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.campos[0]['campo-1'].status }} </mat-cell>
+        <mat-header-cell class="encabezados" *matHeaderCellDef> Campo 01 </mat-header-cell>
+        <mat-cell class="border" *matCellDef="let element" [ngStyle]="getCellStyle(element.campos[0]['campo-1'].status)"
+        >  </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="campo2">
-        <mat-header-cell *matHeaderCellDef> Campo 02 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.campos[1]['campo-2'].status }} </mat-cell>
+        <mat-header-cell class="encabezados" *matHeaderCellDef> Campo 02 </mat-header-cell>
+        <mat-cell class="border" *matCellDef="let element" [ngStyle]="getCellStyle(element.campos[1]['campo-2'].status)"
+        > </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="campo3">
-        <mat-header-cell *matHeaderCellDef> Campo 03 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.campos[2]['campo-3'].status }} </mat-cell>
+        <mat-header-cell class="encabezados" *matHeaderCellDef> Campo 03 </mat-header-cell>
+        <mat-cell class="border" *matCellDef="let element" [ngStyle]="getCellStyle(element.campos[2]['campo-3'].status)"
+        > </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="campo4">
-        <mat-header-cell *matHeaderCellDef> Campo 04 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.campos[3]['campo-4'].status }} </mat-cell>
+        <mat-header-cell class="encabezados" *matHeaderCellDef> Campo 04 </mat-header-cell>
+        <mat-cell class="border" *matCellDef="let element" [ngStyle]="getCellStyle(element.campos[3]['campo-4'].status)"
+        >  </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -57,6 +60,8 @@
   </div>
 </div>
 
-<div class="modal fade " #modal id="modal" aria-hidden="true" data-backdrop="static">
+
+
+<div class="modal" #modal id="modal" aria-hidden="true">
       <h1>Modal modal</h1>
 </div>

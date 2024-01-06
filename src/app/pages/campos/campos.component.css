@@ -6,36 +6,26 @@
 /* Estilo general para la tabla */
 .custom-table {
   width: 100%;
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Estilo para las filas con efecto hover */
 .custom-row:hover {
-  background-color: #f5f5f5;
+  background-color: #92bcece7;
   cursor: pointer;
-
+  color: rgb(250, 248, 248);
 }
 
-/* Estilo para las celdas en general */
-.mat-cell, .mat-header-cell {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
+.horarios{
+  font-size: 25px;
+  justify-content: center;
 }
 
-/* Estilo para la cabecera de la tabla */
-.mat-header-row {
-  background-color: #333;
-  color: #fff;
+.encabezados{
+  font-size: 20px;
+  justify-content: center;
 }
 
-/* Estilo para el texto en la cabecera */
-.mat-header-cell {
-  font-weight: bold;
-}
 
-/* Estilo para resaltar el contenido de las celdas */
-.mat-cell:hover {
-  background-color: #e0e0e0;
-}
+

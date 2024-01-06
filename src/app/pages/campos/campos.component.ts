@@ -3,6 +3,10 @@ import { CamposService } from 'src/app/services/campos.service';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DatePipe } from '@angular/common';
+
+
 
 import { API_CAMPOS } from 'src/config';
 
@@ -40,13 +44,26 @@ export class CamposComponent implements OnInit {
 
   //FECHA
   date = new FormControl(new Date());
+  selectedDate: Date | null | undefined = null;
 
 
   // TABLA
   fecha : string = "2024-01-05";
   displayedColumns: string[] = ['horario', 'campo1', 'campo2', 'campo3','campo4'];
-  // dataSource:any = '';
   dataSource: MatTableDataSource<Horario> = new MatTableDataSource<Horario>();
+
+  getCellStyle(status: string): any {
+    switch (status) {
+      case 'DISPONIBLE':
+        return { 'background-color': 'rgb(241 241 241 / 80%)' };
+      case 'RESERVADO':
+        return { 'background-color': 'rgb(236 233 29 / 77%)' };
+      case 'OCUPADO':
+        return { 'background-color': 'rgb(55 236 55 / 80%)'};
+      default:
+        return {}; // Puedes ajustar esto según tus necesidades
+    }
+  }
 
 
 
@@ -56,7 +73,7 @@ export class CamposComponent implements OnInit {
 
 
   constructor(
-    private camposService: CamposService
+    private camposService: CamposService,
   ){}
 
   ngOnInit(): void {
@@ -121,6 +138,25 @@ horarios() {
 
 
 }
+
+
+// FECHAS
+cambioFecha(event: MatDatepickerInputEvent<Date>) {
+  this.selectedDate = event.value;
+  this.filtrarHorario(this.selectedDate);
+}
+
+filtrarHorario(fecha: Date | null) {
+  if (fecha) {
+    let fechaString = fecha.toISOString().split('T');
+    this.fecha = fechaString[0];
+    this.horarios();
+    // console.log('Fecha seleccionada:', this.fecha);
+  }
+}
+
+
+
 
 
 
