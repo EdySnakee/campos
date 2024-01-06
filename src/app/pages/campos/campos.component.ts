@@ -1,21 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CamposService } from 'src/app/services/campos.service';
+import { FormControl } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
 import { API_CAMPOS } from 'src/config';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  symbol2: string;
+
+
+interface Campo {
+  id_campo: number;
+  clave: string;
+  campo: string;
+  status: string;
+  folio: string;
+  id_solicitud: number;
 }
 
+interface Horario {
+  fecha: string;
+  id_horario: number;
+  horario: string;
+  campos: Campo[];
+}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'Ne',symbol2: 'Ne'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'Ne',symbol2: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne',symbol2: 'Ne'},
-];
+interface HorariosResponse {
+  ok: any;
+  data: Horario[];
+}
+
 
 @Component({
   selector: 'app-campos',
@@ -23,11 +36,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./campos.component.css']
 })
 export class CamposComponent implements OnInit {
+  @ViewChild('modal') modal: any;
+
+  //FECHA
+  date = new FormControl(new Date());
+
 
   // TABLA
-  fecha : string = '';
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol','symbol2'];
-  dataSource = ELEMENT_DATA;
+  fecha : string = "2024-01-05";
+  displayedColumns: string[] = ['horario', 'campo1', 'campo2', 'campo3','campo4'];
+  // dataSource:any = '';
+  dataSource: MatTableDataSource<Horario> = new MatTableDataSource<Horario>();
+
+
 
   // PARAMETROS INICIALES
   titulo : string = '';
@@ -40,7 +61,7 @@ export class CamposComponent implements OnInit {
 
   ngOnInit(): void {
     this.parametrosIniciales();
-    this.horarios(this.fecha);
+    this.horarios();
   }
 
 
@@ -79,19 +100,36 @@ export class CamposComponent implements OnInit {
   }
 
 //HORARIOS DE TABLA DE DISPONIBILIDAD
-horarios(fecha:any){
-  this.camposService.consultarDisp(fecha).subscribe(
-    (resp) => {
+horarios() {
+   let json = {
+    fecha : this.fecha
+   }
+  this.camposService.consultarDisp(json).subscribe(
+    (resp: HorariosResponse) => {
       if (resp.ok) {
-        console.log('->', resp);
-
+        this.dataSource.data = resp.data;
+        console.log(':>> ', resp);
+        // console.log(':>> ', fecha);
       }
     },
     (error) => {
-      console.log('Error de conexión', error);
+      console.log('Error de conexión al obtener horarios: ', error);
     }
-    );
+  );
+
+
+
+
 }
+
+
+
+ // MODAL SOLICITAR
+   abrirModal() {
+  console.log('in :>> ');
+    this.modal.show();  // o utiliza algún método proporcionado por la biblioteca que estés utilizando para modales
+  }
+
 
 
 

@@ -1,46 +1,62 @@
 <div class="container mb-5">
   <div class="container">
     <div class="col text-center my-5">
-      <h1>{{titulo}}</h1>
+      <h1 class="titulo">{{titulo}}</h1>
     </div>
-    <div class="col-8 offset-2">
-      <img [src]="getSvgUrl(mapa)" alt="Mapa SVG">
+    <div class="col-10 offset-1">
+      <!-- <img [src]="getSvgUrl(mapa)" alt="Mapa SVG"> -->
     </div>
   </div>
   <div class="container">
-    <div class="row">
+    <div class="row my-4 d-flex  ">
+
       <div class="col">
-        <h2>Horarios</h2>
+        <mat-form-field>
+          <mat-label>Seleciona la fecha</mat-label>
+          <input matInput [matDatepicker]="picker1" [formControl]="date">
+          <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col text-end ">
+        <button (click)="abrirModal()" data-toggle="modal" data-target="#modal"  class="btn btn-primary mt-3 me-3" > Solicitar cancha </button>
       </div>
     </div>
-    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="position">
+
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+      <ng-container matColumnDef="horario">
         <mat-header-cell *matHeaderCellDef> HORARIOS </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.horario }} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="campo1">
         <mat-header-cell *matHeaderCellDef> Campo 01 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.campos[0]['campo-1'].status }} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="weight">
+      <ng-container matColumnDef="campo2">
         <mat-header-cell *matHeaderCellDef> Campo 02 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.campos[1]['campo-2'].status }} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="symbol">
+      <ng-container matColumnDef="campo3">
         <mat-header-cell *matHeaderCellDef> Campo 03 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.campos[2]['campo-3'].status }} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="symbol2">
+      <ng-container matColumnDef="campo4">
         <mat-header-cell *matHeaderCellDef> Campo 04 </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.symbol2}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{ element.campos[3]['campo-4'].status }} </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" class="custom-row"></mat-row>
     </mat-table>
+
   </div>
+</div>
+
+<div class="modal fade " #modal id="modal" aria-hidden="true" data-backdrop="static">
+      <h1>Modal modal</h1>
 </div>
