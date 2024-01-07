@@ -49,6 +49,7 @@ export class CamposComponent implements OnInit {
 
 
   //FECHA
+  fechaActual: any = '';
   date = new FormControl(new Date());
   date2 = new FormControl(new Date());
   date3 = new FormControl(new Date());
@@ -82,9 +83,13 @@ export class CamposComponent implements OnInit {
 
   constructor(
     private camposService: CamposService,
+    private datePipe: DatePipe
   ){}
 
   ngOnInit(): void {
+    const fechaHoy = new Date();
+    this.fechaActual = this.datePipe.transform(fechaHoy, 'EEEE d MMMM yyyy', 'es');
+    console.log('fecha :>> ', this.fechaActual);
     this.parametrosIniciales();
     this.horarios();
   }

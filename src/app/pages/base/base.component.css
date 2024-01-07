@@ -1,0 +1,14 @@
+.btn-soli {
+  background-color: #37ec37cc;
+  color: rgb(16, 17, 19);
+  font-weight: 500;
+  border: 0.5px solid rgba(106, 101, 101, 0.278);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Añade una sombra sutil al pasar el ratón por encima */
+}
+
+.btn-soli:hover {
+  background-color: #2fd82fcc; /* Cambia el color de fondo al pasar el ratón por encima */
+  color: #ffffff; /* Cambia el color del texto al pasar el ratón por encima */
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.2); /* Añade una sombra sutil al pasar el ratón por encima */
+}

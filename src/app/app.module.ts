@@ -20,7 +20,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,13 +38,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatNativeDateModule,
     ReactiveFormsModule,
     FormsModule,
-    DatePipe,
     MatSelectModule,
     MatCheckboxModule
 
 
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
