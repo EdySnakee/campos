@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CamposService } from 'src/app/services/campos.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -40,10 +40,18 @@ interface HorariosResponse {
   styleUrls: ['./campos.component.css']
 })
 export class CamposComponent implements OnInit {
+
+// MODAL
+  modalOpen : boolean = false;
+  disableSelect = new FormControl(false);
   @ViewChild('modal') modal: any;
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+
 
   //FECHA
   date = new FormControl(new Date());
+  date2 = new FormControl(new Date());
+  date3 = new FormControl(new Date());
   selectedDate: Date | null | undefined = null;
 
 
@@ -165,6 +173,7 @@ filtrarHorario(fecha: Date | null) {
   console.log('in :>> ');
     this.modal.show();  // o utiliza algún método proporcionado por la biblioteca que estés utilizando para modales
   }
+
 
 
 

@@ -29,3 +29,11 @@
 
 
 
+.modal {
+  z-index: 1051; /* Ajusta este valor según sea necesario */
+}
+
+body .modal-backdrop {
+  z-index: 900;
+}
+
