@@ -4,3 +4,9 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: rgba(214, 213, 213, 0.494); }
 /* styles.css */
 @import "~bootstrap/dist/css/bootstrap.css";
+
+
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 1060 !important;
+}

@@ -46,13 +46,25 @@ export class CamposComponent implements OnInit {
   disableSelect = new FormControl(false);
   @ViewChild('modal') modal: any;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+// DATOS DEL MODAL SOLICITUD
+date2 = new FormControl(new Date());
+date3 = new FormControl(new Date());
+nombre : string = '';
+correo : string = '';
+celular : string = '';
+local : string = '';
+motivo : string = '';
+fechaInicio : Date | null | undefined = null;
+fechaFinal : Date | null | undefined = null;
+horarios = ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00',
+ '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00','22:00', '23:00'];
+ selectedHorario: string = '';
+
 
 
   //FECHA
   fechaActual: any = '';
   date = new FormControl(new Date());
-  date2 = new FormControl(new Date());
-  date3 = new FormControl(new Date());
   selectedDate: Date | null | undefined = null;
 
 
@@ -91,7 +103,7 @@ export class CamposComponent implements OnInit {
     this.fechaActual = this.datePipe.transform(fechaHoy, 'EEEE d MMMM yyyy', 'es');
     console.log('fecha :>> ', this.fechaActual);
     this.parametrosIniciales();
-    this.horarios();
+    this.getHorarios();
   }
 
 
@@ -130,7 +142,7 @@ export class CamposComponent implements OnInit {
   }
 
 //HORARIOS DE TABLA DE DISPONIBILIDAD
-horarios() {
+getHorarios() {
    let json = {
     fecha : this.fecha
    }
@@ -163,7 +175,7 @@ filtrarHorario(fecha: Date | null) {
   if (fecha) {
     let fechaString = fecha.toISOString().split('T');
     this.fecha = fechaString[0];
-    this.horarios();
+    this.getHorarios()
     // console.log('Fecha seleccionada:', this.fecha);
   }
 }
@@ -180,6 +192,36 @@ filtrarHorario(fecha: Date | null) {
   }
 
 
+  cambioFechaInicio(event: MatDatepickerInputEvent<Date>) {
+    const f = event.value;
+    const fechaFormateada : any = f?.toISOString().split('T');
+    this.fechaInicio = fechaFormateada[0];
+  }
+
+  cambioFechaFinal(event: MatDatepickerInputEvent<Date>) {
+    const f = event.value;
+    const fechaFormateada : any = f?.toISOString().split('T');
+    this.fechaFinal = fechaFormateada[0];
+  }
+
+
+enviarSolicitud(){
+  // const fechaActual = this.datePipe.transform(this.fechaInicio, 'dd/MM/yyyy');
+  let json = {
+    id_soli : 0,
+    nombre_solicitud : this.nombre,
+    correo : this.correo,
+    celular: this.celular,
+    local : this.local,
+    motivo: this.motivo,
+    fecha_inicial: '' || this.fechaInicio,
+    fecha_final: '' || this.fechaFinal,
+    fecha_actual: this.fechaActual,
+    horario: this.selectedHorario,
+  }
+  //do somting
+  console.log('json :>> ', json);
+}
 
 
 

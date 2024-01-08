@@ -4,7 +4,7 @@
       <h1 class="titulo">{{titulo}}</h1>
     </div>
     <div class="col-10 offset-1">
-      <img [src]="getSvgUrl(mapa)" alt="Mapa SVG">
+      <!-- <img [src]="getSvgUrl(mapa)" alt="Mapa SVG"> -->
     </div>
   </div>
   <div class="container">
@@ -27,7 +27,6 @@
         </div>
         </div>
       <div class="col-3 mt-2 text-end ">
-        <!-- Button trigger modal -->
         <button type="button" class="btn btn-soli" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Solicitar campo
         </button>
@@ -76,7 +75,7 @@
 
 
 <!-- Modal SOLICITUDES NUEVAS -->
-<div class="modal fade" tabindex="-1" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" tabindex="-1" id="exampleModal" aria-hidden="true"  data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -90,7 +89,7 @@
             <div class="col-4">
               <mat-form-field>
                 <mat-label>FECHA INICIAL</mat-label>
-                <input matInput [matDatepicker]="picker2" [formControl]="date2" (dateChange)="cambioFecha($event)">
+                <input [(ngModel)]="fechaInicio" matInput [matDatepicker]="picker2" (dateChange)="cambioFechaInicio($event)">
                 <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
@@ -98,7 +97,7 @@
              <div class="col-4">
               <mat-form-field>
                 <mat-label>FECHA FINAL</mat-label>
-                <input matInput [matDatepicker]="picker3" [formControl]="date3" (dateChange)="cambioFecha($event)">
+                <input matInput [matDatepicker]="picker3" (dateChange)="cambioFechaFinal($event)">
                 <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
                 <mat-datepicker #picker3></mat-datepicker>
               </mat-form-field>
@@ -106,12 +105,8 @@
             <div class="col-4">
               <mat-form-field>
                 <mat-label>HORARIOS</mat-label>
-                <mat-select [disabled]="disableSelect.value">
-                  <mat-option value="option1">06:00</mat-option>
-                  <mat-option value="option2">07:00</mat-option>
-                  <mat-option value="option3">08:00</mat-option>
-                  <mat-option value="option3">09:00</mat-option>
-                  <mat-option value="option3">10:00</mat-option>
+                <mat-select [(ngModel)]="selectedHorario">
+                  <mat-option *ngFor="let horario of horarios" [value]="horario">{{ horario }}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -125,13 +120,13 @@
 
                 <mat-form-field style="width: -webkit-fill-available;" class="example-full-width">
                   <mat-label>Nombre completo</mat-label>
-                  <input matInput placeholder="Messi Velazquez" value="">
+                  <input [(ngModel)]="nombre" matInput placeholder="Messi Velazquez" value="">
                 </mat-form-field>
 
 
                 <mat-form-field style="width: -webkit-fill-available;" class="example-full-width">
                   <mat-label>Email</mat-label>
-                  <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+                  <input [(ngModel)]="correo" type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
                   <!-- @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
                     <mat-error>Please enter a valid email address</mat-error>
                   }
@@ -148,14 +143,14 @@
                 <mat-form-field style="width: -webkit-fill-available;" class="">
                   <mat-label>Celular</mat-label>
                   <!-- <span matPrefix>+1 &nbsp;</span> -->
-                  <input type="tel" matInput placeholder="555-555-1234">
+                  <input [(ngModel)]="celular" type="tel" matInput placeholder="555-555-1234">
                   <!-- <mat-icon matSuffix>mode_edit</mat-icon> -->
                 </mat-form-field>
 
                 <mat-form-field style="width: -webkit-fill-available;" class="">
                   <mat-label>Telefono local</mat-label>
                   <!-- <span matPrefix>+1 &nbsp;</span> -->
-                  <input type="tel" matInput placeholder="555-555-1234">
+                  <input [(ngModel)]="local" type="tel" matInput placeholder="555-555-1234">
                   <!-- <mat-icon matSuffix>mode_edit</mat-icon> -->
                 </mat-form-field>
               </div>
@@ -166,7 +161,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Motivo</mat-label>
-    <textarea matInput placeholder="Partada inicial..."></textarea>
+    <textarea [(ngModel)]="motivo" matInput placeholder="Partada inicial..."></textarea>
   </mat-form-field>
 </div>
 
@@ -174,7 +169,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-soli ">Enviar solicitud</button>
+        <button (click)="enviarSolicitud()" type="button" class="btn btn-soli ">Enviar solicitud</button>
       </div>
     </div>
   </div>
