@@ -17,8 +17,10 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
-
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ReactiveFormsModule,
     FormsModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule,
+    MatCardModule,
+    FontAwesomeModule,
+    MatIconModule
 
 
   ],

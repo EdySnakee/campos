@@ -12,8 +12,8 @@
 
       <div class="col-4">
         <mat-form-field>
-          <mat-label>Seleciona la fecha</mat-label>
-          <input matInput [matDatepicker]="picker1" [formControl]="date" (dateChange)="cambioFecha($event)">
+          <mat-label>Seleciona una fecha</mat-label>
+          <input matInput [matDatepicker]="picker1" (dateChange)="cambioFecha($event)">
           <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -29,6 +29,7 @@
       <div class="col-3 mt-2 text-end ">
         <button type="button" class="btn btn-soli" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Solicitar campo
+          <i class="bi bi-bookmark-plus"></i>
         </button>
       </div>
     </div>
@@ -66,7 +67,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row data-bs-toggle="modal" data-bs-target="#horarios" *matRowDef="let row; columns: displayedColumns;" class="custom-row"></mat-row>
+      <mat-row (click)="detallesHorario(row)" data-bs-toggle="modal" data-bs-target="#horarios" *matRowDef="let row; columns: displayedColumns;" class="custom-row"></mat-row>
     </mat-table>
 
   </div>
@@ -79,7 +80,9 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Fecha de solicitud: 9/12/2024</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          <i class="bi bi-calendar-event"></i>
+          Fecha de solicitud: 9/12/2024</h1>
         <!-- <span>Lunes 1/03/2024</span> -->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -169,7 +172,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        <button (click)="enviarSolicitud()" type="button" class="btn btn-soli ">Enviar solicitud</button>
+        <button (click)="enviarSolicitud()" type="button" class="btn btn-soli ">Guardar
+          <i class="bi bi-plus-circle"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -180,102 +185,59 @@
 <div class="modal fade" tabindex="-1" id="horarios"  aria-labelledby="horarios" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="horariosLabel">Infomacion de campo</h1>
+      <div class="modal-header pb-0">
+      <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        <h1 class=" titulo_horarios" id="horariosLabel">
+          <i class="bi bi-calendar-event"></i>
+          Fecha: {{fechaHorario | date:'dd/MM/yyyy'}} - Horario: {{horarioH}} hrs
+        </h1>
         <!-- <span>Lunes 1/03/2024</span> -->
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <!-- <div #fechas class="row">
-
-            <div class="col-4">
-              <mat-form-field>
-                <mat-label>FECHA INICIAL</mat-label>
-                <input matInput [matDatepicker]="picker2" [formControl]="date2" (dateChange)="cambioFecha($event)">
-                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-form-field>
-            </div>
-             <div class="col-4">
-              <mat-form-field>
-                <mat-label>FECHA FINAL</mat-label>
-                <input matInput [matDatepicker]="picker3" [formControl]="date3" (dateChange)="cambioFecha($event)">
-                <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
-                <mat-datepicker #picker3></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <div class="col-4">
-              <mat-form-field>
-                <mat-label>HORARIOS</mat-label>
-                <mat-select [disabled]="disableSelect.value">
-                  <mat-option value="option1">06:00</mat-option>
-                  <mat-option value="option2">07:00</mat-option>
-                  <mat-option value="option3">08:00</mat-option>
-                  <mat-option value="option3">09:00</mat-option>
-                  <mat-option value="option3">10:00</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div> -->
           <div class="container">
-            <div class="col">
-              <h2>Datos del </h2>
+            <div class="col-10 offset-1">
+              <mat-card *ngFor="let horario of horarioDetalles" class="mb-2 custom-card " >
+                <mat-card-header>
+                  <mat-card-title class="mb-0">
+                    <div class="col" style="align-items: center;">
+                      <i class="bi bi-record-fill"></i>
+                      <span>{{ horario.campo }}</span>
+                    </div>
+
+                  </mat-card-title>
+                </mat-card-header>
+                <div class="row">
+                  <div *ngIf="noHaydatos === true" class="col-10">
+                    <h1>No hay datos para mostrar</h1>
+                  </div>
+                  <div class="col-6">
+                    <mat-card-content class="mb-0">
+                      <mat-card-subtitle>Datos del solictante:</mat-card-subtitle>
+                      <h2 class="mb-0 pb-0">{{horario.nombre_solicitante}}</h2>
+                      <h3 class="p-0 m-0"><b>Telefono:</b> {{horario.celular_solicitante}}</h3>
+                      <h3 class="p-0 m-0"><b>Correo:</b> {{horario.correo_solicitante}}</h3>
+                    </mat-card-content>
+                  </div>
+                  <div class="col-6">
+                    <mat-card-content>
+                      <mat-card-subtitle>Descripción</mat-card-subtitle>
+                      <h3>Fecha: {{fechaHorario | date:'dd/MM/yyyy'}}</h3>
+                      <h3>Horario: {{horarioH}} hrs</h3>
+                    </mat-card-content>
+                  </div>
+                </div>
+                  <!-- <mat-card-actions align="end">
+                  <button mat-button>contacto</button>
+                </mat-card-actions> -->
+              </mat-card>
             </div>
-            <div class="row">
-              <div class="col-6">
-
-                <mat-form-field style="width: -webkit-fill-available;" class="example-full-width">
-                  <mat-label>Nombre completo</mat-label>
-                  <input matInput placeholder="Messi Velazquez" value="">
-                </mat-form-field>
-
-
-                <mat-form-field style="width: -webkit-fill-available;" class="example-full-width">
-                  <mat-label>Email</mat-label>
-                  <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
-                  <!-- @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-                    <mat-error>Please enter a valid email address</mat-error>
-                  }
-                  @if (emailFormControl.hasError('required')) {
-                    <mat-error>El email es <strong>requerio</strong></mat-error>
-                  } -->
-                </mat-form-field>
-
-
-
-              </div>
-              <div class="col-6">
-
-                <mat-form-field style="width: -webkit-fill-available;" class="">
-                  <mat-label>Celular</mat-label>
-                  <!-- <span matPrefix>+1 &nbsp;</span> -->
-                  <input type="tel" matInput placeholder="555-555-1234">
-                  <!-- <mat-icon matSuffix>mode_edit</mat-icon> -->
-                </mat-form-field>
-
-                <mat-form-field style="width: -webkit-fill-available;" class="">
-                  <mat-label>Telefono local</mat-label>
-                  <!-- <span matPrefix>+1 &nbsp;</span> -->
-                  <input type="tel" matInput placeholder="555-555-1234">
-                  <!-- <mat-icon matSuffix>mode_edit</mat-icon> -->
-                </mat-form-field>
-              </div>
-
-            </div>
-
-<div class="row">
-
-  <mat-form-field class="example-full-width">
-    <mat-label>Motivo</mat-label>
-    <textarea matInput placeholder="Partada inicial..."></textarea>
-  </mat-form-field>
-</div>
 
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-soli ">Guardar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Regresar
+          <i class="bi bi-arrow-return-right"></i></button>
       </div>
     </div>
   </div>

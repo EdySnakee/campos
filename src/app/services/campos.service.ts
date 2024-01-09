@@ -52,7 +52,7 @@ export class CamposService {
 
   // CONSULTAR SOLICITUDES
     consultarSoli(json:any){
-      let url = API_CAMPOS+'/consultarSolicitud';
+      let url = API_CAMPOS+'/consultarSolicitudes';
       return this.http.post( url, json )
         .pipe(map( (resp: any) => {
           return resp;

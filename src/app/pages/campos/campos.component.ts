@@ -33,6 +33,17 @@ interface HorariosResponse {
   data: Horario[];
 }
 
+interface Detalles {
+  id_detalle: number;
+  campo : string;
+  nombre_solicitante:string;
+  correo_solicitante: string;
+  celular_solicitante:string;
+  fecha_solicitud: string;
+  horario: string;
+}
+
+
 
 @Component({
   selector: 'app-campos',
@@ -222,8 +233,42 @@ enviarSolicitud(){
   //do somting
   console.log('json :>> ', json);
 }
+// MODAL HORARIO
+idHorario: number = 0;
+fechaHorario : string = '';
+horarioH : string = '';
+camposHorarios: [] = [];
+horarioDetalles: Detalles[] = [];
+noHaydatos:boolean = false;
 
 
+detallesHorario(horario:any){
+  this.horarioDetalles = [];
+  this.fechaHorario = horario.fecha.toString().split(' ')[0];
+  this.horarioH = horario.horario;
+  this.camposHorarios = horario.campos;
+  this.idHorario = horario.id_horario;
+// console.log('horario :>> ', this.camposHorarios );
+this.consultarHorarios();
+}
+
+//conultar horarios
+consultarHorarios(){
+  let json = {
+    id_horario : this.idHorario ,
+    fecha : this.fechaHorario
+  }
+  this.camposService.consultarSoli(json).subscribe((resp:any)=>{
+    if(resp.ok){
+      this.horarioDetalles = resp.data;
+      console.log('resp :>> ', this.horarioDetalles);
+    }else {
+      this.horarioDetalles = [];
+    }
+  })
+
+
+}
 
 
 }

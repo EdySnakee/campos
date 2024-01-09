@@ -88,3 +88,41 @@ body .modal-backdrop {
 
 }
 
+.custom-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.custom-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.custom-card-title {
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+
+.titulo_horarios{
+  font-size: 33px;
+  font-weight: 400;
+  text-align: center;
+}
+.bi-calendar-event{
+font-size: 27px;
+}
+
+/* Agrega cualquier estilo adicional según tus preferencias */
+
+.bi-record-fill {
+  color: rgb(47, 255, 92);
+  font-size: 16px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.bi-record-fill:hover {
+  transform: scale(1.2); /* Ajusta el valor según tus preferencias */
+}
