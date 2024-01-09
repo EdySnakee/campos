@@ -1,24 +1,46 @@
 <div class="container mb-5">
-  <div class="container">
+  <!-- <div class="container">
     <div class="col text-center my-5">
       <h1 class="titulo">{{titulo}}</h1>
+      <img width="270" height="220" src=".\assets\lajaula.jpg" alt="logo">
     </div>
     <div class="col-10 offset-1">
       <img [src]="getSvgUrl(mapa)" alt="Mapa SVG">
     </div>
+  </div> -->
+  <div class="container mt-3">
+    <div class="row">
+      <!-- <h1 class="titulo">{{ titulo }}</h1> -->
+      <div class="col-md-8">
+        <img [src]="getSvgUrl(mapa)" alt="Mapa SVG" class="img-fluid"> <!-- Agregué la clase img-fluid para que la imagen sea responsiva -->
+      </div>
+      <div class="col-md-4 text-center">
+        <img class="logo-img mt-2" width="270" height="220" src=".\assets\lajaula.jpg" alt="logo">
+        <h1 class="titulo mt-3">{{ titulo }}</h1>
+        <mat-card-subtitle>Filtrar horarios por fecha:</mat-card-subtitle>
+        <mat-form-field >
+            <mat-label>Seleciona una fecha</mat-label>
+            <input matInput [matDatepicker]="picker1" (dateChange)="cambioFecha($event)">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+      </div>
+
+    </div>
   </div>
+
   <div class="container">
     <div class="row my-4 d-flex  ">
 
-      <div class="col-4">
+      <!-- <div class="col-4">
         <mat-form-field>
           <mat-label>Seleciona una fecha</mat-label>
           <input matInput [matDatepicker]="picker1" (dateChange)="cambioFecha($event)">
           <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
-      </div>
-      <div class="col-5">
+      </div> -->
+      <div class="col-6 offset-1">
         <div class="row">
 
           <div class="col disponible"> <p>DISPONIBLE</p> </div>
@@ -26,7 +48,7 @@
           <div class="col reservado"> <p>RESERVADO</p> </div>
         </div>
         </div>
-      <div class="col-3 mt-2 text-end ">
+      <div class="col-3 mt-2 ms-auto ">
         <button type="button" class="btn btn-soli" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Solicitar campo
           <i class="bi bi-bookmark-plus"></i>

@@ -1,6 +1,6 @@
 
 .titulo{
-  font-size: 36px;
+  font-size: 26px;
 }
 
 /* Estilo general para la tabla */
@@ -125,4 +125,16 @@ font-size: 27px;
 
 .bi-record-fill:hover {
   transform: scale(1.2); /* Ajusta el valor según tus preferencias */
+}
+.logo-img {
+  width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
+  max-width: 270px; /* Establece un ancho máximo para la imagen */
+  height: auto; /* Mantiene la proporción original de la imagen */
+  border-radius: 10px; /* Añade bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade una suave sombra */
+  transition: transform 0.3s ease-in-out; /* Agrega una transición de transformación para efecto hover */
+}
+
+.logo-img:hover {
+  transform: scale(1.1); /* Aumenta el tamaño de la imagen al pasar el ratón sobre ella */
 }
