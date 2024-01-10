@@ -1,29 +1,30 @@
 <div class="container mb-5">
-  <!-- <div class="container">
-    <div class="col text-center my-5">
-      <h1 class="titulo">{{titulo}}</h1>
-      <img width="270" height="220" src=".\assets\lajaula.jpg" alt="logo">
-    </div>
-    <div class="col-10 offset-1">
-      <img [src]="getSvgUrl(mapa)" alt="Mapa SVG">
-    </div>
-  </div> -->
   <div class="container mt-3">
     <div class="row">
-      <!-- <h1 class="titulo">{{ titulo }}</h1> -->
       <div class="col-md-8">
-        <img [src]="getSvgUrl(mapa)" alt="Mapa SVG" class="img-fluid"> <!-- Agregué la clase img-fluid para que la imagen sea responsiva -->
+        <svg class="h-100 w-100" id="mapa" [ngStyle]="selectedStyle" (click)="campoSelect($event)" [innerHTML]="mapa"></svg>
       </div>
+
       <div class="col-md-4 text-center">
         <img class="logo-img mt-2" width="270" height="220" src=".\assets\lajaula.jpg" alt="logo">
         <h1 class="titulo mt-3">{{ titulo }}</h1>
-        <mat-card-subtitle>Filtrar horarios por fecha:</mat-card-subtitle>
+        <div class="col text-center">
+          <mat-card-subtitle>SELECIONA UNA CANCHA:</mat-card-subtitle>
+          <mat-form-field>
+            <mat-label>CANCHAS</mat-label>
+            <mat-select name="cancha" [(ngModel)]="selectHorario" (ngModelChange)="applyStyles()">
+              <mat-option *ngFor="let cancha of campos" [value]="cancha">{{ cancha }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <mat-card-subtitle>SELECCIONA UNA FECHA:</mat-card-subtitle>
         <mat-form-field >
             <mat-label>Seleciona una fecha</mat-label>
             <input matInput [matDatepicker]="picker1" (dateChange)="cambioFecha($event)">
             <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
+
       </div>
 
     </div>

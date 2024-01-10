@@ -138,3 +138,40 @@ font-size: 27px;
 .logo-img:hover {
   transform: scale(1.1); /* Aumenta el tamaño de la imagen al pasar el ratón sobre ella */
 }
+
+/* #CANCHA1{
+
+
+  .cls-18:hover{
+    fill: red !important;
+  }
+
+} */
+#mapa{
+
+  #CANCHA1{
+    .cls-18:hover{
+      fill: rgba(135, 201, 35, 0.718);
+      cursor: pointer;
+    }
+  }
+  #CANCHA2{
+    .cls-18:hover{
+      fill: rgba(135, 201, 35, 0.718);
+      cursor: pointer;
+    }
+  }
+  #CANCHA3{
+    .cls-18:hover{
+      fill: rgba(135, 201, 35, 0.718);
+      cursor: pointer;
+    }
+  }
+  #CANCHA4{
+    .cls-18:hover{
+      fill: rgba(135, 201, 35, 0.718);
+      cursor: pointer;
+    }
+  }
+
+}

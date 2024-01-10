@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -70,7 +71,7 @@ fechaFinal : Date | null | undefined = null;
 horarios = ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00',
  '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00','22:00', '23:00'];
  selectedHorario: string = '';
-
+// campos = ['Campo1', 'Campo2', 'Campo3', 'Campo4']
 
 
   //FECHA
@@ -102,11 +103,13 @@ horarios = ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:0
   // PARAMETROS INICIALES
   titulo : string = '';
   mapa : any = '';
+  mapa2 : any = '';
 
 
   constructor(
     private camposService: CamposService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private sanitizer: DomSanitizer
   ){}
 
   ngOnInit(): void {
@@ -117,14 +120,64 @@ horarios = ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:0
     this.getHorarios();
   }
 
+  svgData: string = '';
+  campoSelect(event: any) {
+    // const targetElement = event.target as SVGElement;
+    console.log('e.targ->', event.target);
+  }
+
+
+  // PARA EL SVG
+  selectHorario!: string; // Asumiendo que el tipo de datos de campos es string[]
+  selectedStyle!: any ; // Puedes ajustar el tipo según tus necesidades
+
+  campos = ['CANCHA1', 'CANCHA2', 'CANCHA3', 'CANCHA4'];
+
+  // Define estilos para cada CANCHA
+  styles:any = {
+
+    CANCHA4: {
+          fill: 'none',
+          cursor: 'pointer'
+    },
+
+      CANCHA2: {
+          '.cls-18': {
+            fill: 'rgba(135, 201, 35, 0.718)',
+            cursor: 'pointer'
+          }
+      },
+
+      CANCHA3: {
+        hover: {
+        fill: 'rgba(135, 201, 35, 0.718)',
+        cursor: 'pointer'
+      }
+      },
+     CANCHA1: {
+      hover: {
+        fill: 'rgba(135, 201, 35, 0.718)',
+        cursor: 'pointer'
+      }
+        }
+
+  };
+
+  // Método para aplicar el estilo según la opción seleccionada
+  applyStyles() {
+    this.selectedStyle = this.styles[this.selectHorario];
+    console.log(':>> ',this.selectedStyle);
+  }
+
 
   parametrosIniciales(){
     this.camposService.getmap().subscribe((resp:any)=>{
       if(resp){
         const data : any = resp.data
+        const map : any = resp.data.mapa
         this.titulo = data.nombre
-        this.mapa = data.mapa
-        // console.log(' :>> ', this.mapa, data);
+        this.mapa = this.sanitizer.bypassSecurityTrustHtml(map);
+         console.log(' :>> ', this.mapa);
       }else {
         console.log(' :>> ',resp);
       }
